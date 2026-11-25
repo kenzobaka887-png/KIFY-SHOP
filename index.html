@@ -1,1 +1,359 @@
 
+<!DOCTYPE html>
+<html lang="my" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KIFY GAME STORE — DIGITAL ARMORY</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts: Padauk, Plus Jakarta Sans, Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Padauk:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        armory: {
+                            bg: '#060a10',
+                            surface: '#0c121d',
+                            card: '#0f1726',
+                            cardHover: '#131d30',
+                            border: '#1c2a42',
+                            borderBright: '#2a436b',
+                            neon: '#3b82f6',
+                            neonBright: '#60a5fa',
+                            cyan: '#38bdf8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Padauk', 'sans-serif'],
+                        display: ['Montserrat', 'Padauk', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+
+        body {
+            background-color: #060a10;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37, 99, 235, 0.22), transparent 70%),
+                radial-gradient(ellipse 60% 40% at 85% 25%, rgba(14, 165, 233, 0.12), transparent 65%);
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', 'Padauk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-header {
+            background: rgba(8, 13, 22, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .neon-blue-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 0 18px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+        .neon-blue-btn:hover {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            box-shadow: 0 0 24px rgba(59, 130, 246, 0.55);
+        }
+
+        .pubg-gold-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 0 18px rgba(245, 158, 11, 0.32);
+            transition: all 0.2s ease;
+        }
+        .pubg-gold-btn:hover {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 0 24px rgba(251, 191, 36, 0.5);
+        }
+
+        .armory-card {
+            background: linear-gradient(180deg, rgba(16, 25, 42, 0.92) 0%, rgba(10, 16, 28, 0.96) 100%);
+            border: 1px solid rgba(36, 54, 84, 0.85);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .armory-card:hover {
+            border-color: rgba(59, 130, 246, 0.55);
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.75), 0 0 18px rgba(37, 99, 235, 0.14);
+        }
+
+        .pubg-standalone-frame {
+            background: linear-gradient(145deg, rgba(24, 21, 13, 0.95) 0%, rgba(12, 18, 30, 0.96) 55%, rgba(9, 15, 27, 0.98) 100%);
+            border: 1.5px solid rgba(245, 158, 11, 0.45);
+            box-shadow: 0 12px 34px rgba(2, 6, 23, 0.8), 0 0 22px rgba(245, 158, 11, 0.12);
+        }
+
+        .account-banner-art {
+            background:
+                linear-gradient(125deg, rgba(9, 18, 34, 0.95) 0%, rgba(14, 30, 56, 0.88) 55%, rgba(8, 15, 29, 0.97) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .account-banner-art::after {
+            content: "";
+            position: absolute;
+            top: -30%;
+            right: -8%;
+            width: 44%;
+            height: 165%;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.18), rgba(15, 23, 42, 0.05));
+            transform: skewX(-18deg);
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070c14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a8a;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- 1. STICKY HEADER -->
+    <header class="sticky top-0 z-40 glass-header border-b border-armory-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-3.5 pb-3 space-y-3">
+            <!-- Top Row: Brand Logo + @KIFYCASS Pill + Admin Preview Button -->
+            <div class="flex items-center justify-between gap-2.5">
+                <button type="button" onclick="navigateTo('hub')" class="flex items-center gap-3 text-left group cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 shadow-inner group-hover:border-blue-400 transition-colors flex-shrink-0">
+                        <i class="fa-solid fa-bolt text-base"></i>
+                    </div>
+                    <div class="leading-tight">
+                        <div class="text-sm sm:text-base font-extrabold tracking-wide text-white uppercase font-display">
+                            KIFY GAME STORE
+                        </div>
+                        <div class="text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase">
+                            DIGITAL ARMORY
+                        </div>
+                    </div>
+                </button>
+
+                <div class="flex items-center gap-2">
+                    <a href="https://t.me/KIFYCASS" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d1c33] hover:bg-[#13294a] border border-blue-500/35 text-sky-400 text-xs font-bold transition-all whitespace-nowrap">
+                        <i class="fa-brands fa-telegram text-sm text-sky-400"></i>
+                        <span>@KIFYCASS</span>
+                    </a>
+
+                    <button type="button" onclick="openAdminPreview('mlbb')"
+                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl neon-blue-btn text-white text-xs font-bold cursor-pointer whitespace-nowrap">
+                        <i class="fa-solid fa-sliders text-xs"></i>
+                        <span>Admin Preview</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs Row: Hub, Accounts, PUBG Mobile, Dia Top-Up, TG & Stars -->
+            <nav aria-label="Primary Navigation" class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+                <button type="button" id="nav-hub" onclick="navigateTo('hub')"
+                    class="nav-tab px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer">
+                    Hub
+                </button>
+                <button type="button" id="nav-accounts" onclick="navigateTo('accounts')"
+                    class="nav-tab px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer">
+                    MLBB Accounts
+                </button>
+                <button type="button" id="nav-pubg" onclick="navigateTo('pubg')"
+                    class="nav-tab px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer">
+                    PUBG Mobile
+                </button>
+                <button type="button" id="nav-dia" onclick="navigateTo('dia')"
+                    class="nav-tab px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer">
+                    Dia Top-Up
+                </button>
+                <button type="button" id="nav-tg" onclick="navigateTo('tg')"
+                    class="nav-tab px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer">
+                    TG &amp; Stars
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+        <!-- 2. HUB VIEW -->
+        <section id="view-hub" class="space-y-6">
+            <!-- Hero Card -->
+            <div class="rounded-3xl bg-gradient-to-br from-[#0e1b30] via-[#0b1322] to-[#080d17] border border-armory-border p-6 sm:p-8 shadow-2xl space-y-5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0d192e] border border-blue-500/30 text-[11px] font-bold tracking-wider text-sky-300 uppercase">
+                    <i class="fa-solid fa-shield-halved text-blue-400 text-xs"></i>
+                    <span>KIFY GAME STORE • @KIFYCASS</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white font-display uppercase leading-none">
+                    KIFY GAME <span class="text-blue-500">STORE</span>
+                </h1>
+
+                <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+                    Mobile Legends အကောင့်များ Diamond Telegram star နှင့် Premium များကို
+                    <a href="https://t.me/KIFYCASS" target="_blank" rel="noopener noreferrer" class="text-sky-400 font-bold hover:underline">@KIFYCASS</a>
+                    telegram ဆက်သွယ်ပြီးဝယ်ယူနိုင်ပါသည်
+                </p>
+
+                <div class="flex flex-wrap items-center gap-3 pt-1">
+                    <button type="button" onclick="navigateTo('accounts')"
+                        class="inline-flex items-center gap-2 px-5 py-3 rounded-xl neon-blue-btn text-white text-xs sm:text-sm font-extrabold cursor-pointer">
+                        <span>Mobile Legend အကောင့်များ</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+
+                    <a href="https://t.me/KIFYCASS" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0d1626] hover:bg-[#13223b] border border-armory-borderBright text-slate-100 text-xs sm:text-sm font-bold transition-all">
+                        <i class="fa-brands fa-telegram text-sky-400 text-base"></i>
+                        <span>Telegram မှ ဆက်သွယ်ရန်</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DEDICATED STANDALONE PUBG MOBILE FRAME -->
+            <div class="pubg-standalone-frame rounded-3xl p-5 sm:p-7">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                        <div class="w-full sm:w-44 h-28 rounded-2xl overflow-hidden border border-amber-500/40 bg-[#090f1b] flex-shrink-0 relative">
+                            <img id="hubPubgCoverPreview" src="" alt="PUBG အကောင့်ဈေးနှုန်းများ" class="hidden w-full h-full object-cover" />
+                            <div id="hubPubgCoverFallback" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-amber-500/20 via-[#10192b] to-[#080d17] p-3 text-center">
+                                <i class="fa-solid fa-crosshairs text-2xl text-amber-400 mb-1"></i>
+                                <span class="text-[10px] font-extrabold tracking-widest text-amber-300 uppercase">PUBG MOBILE</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-white">
+                                PUBG အကောင့်ဈေးနှုန်းများ
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2.5 flex-shrink-0">
+                        <button type="button" onclick="navigateTo('pubg')"
+                            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl pubg-gold-btn text-slate-950 text-xs sm:text-sm font-black cursor-pointer">
+                            <i class="fa-solid fa-crosshairs"></i>
+                            <span>Pubg Mobile အကောင့်များကြည့်ရန်</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Feature Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Feature Card 1: Mobile Legend Accounts -->
+                <div onclick="navigateTo('accounts')"
+                    class="armory-card rounded-3xl p-6 flex flex-col justify-between gap-6 cursor-pointer group">
+                    <div class="space-y-3">
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white leading-snug group-hover:text-blue-300 transition-colors">
+                            Mobile Legend အကောင့်များ
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Explore curated MLBB accounts, filter by Available or Sold Out status, sort by price, inspect photo slides, and order via @KIFYCASS.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-bold text-blue-400 group-hover:text-blue-300 pt-2">
+                        <span>Browse Accounts</span>
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+
+                <!-- Feature Card 2: MLBB Diamond Prices -->
+                <div onclick="navigateTo('dia')"
+                    class="armory-card rounded-3xl p-6 flex flex-col justify-between gap-6 cursor-pointer group">
+                    <div class="space-y-3">
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white leading-snug group-hover:text-blue-300 transition-colors">
+                            MLBB Diamond ဈေးနှုန်းများ
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            View Weekly Pass, Weekly Elite Bundle, Monthly Epic Bundle, and 86 to 9,288 Diamond packages with instant @KIFYCASS order links.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-bold text-blue-400 group-hover:text-blue-300 pt-2">
+                        <span>View Dia Prices</span>
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+
+                <!-- Feature Card 3: Star & TG Premium Prices -->
+                <div onclick="navigateTo('tg')"
+                    class="armory-card rounded-3xl p-6 flex flex-col justify-between gap-6 cursor-pointer group">
+                    <div class="space-y-3">
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white leading-snug group-hover:text-blue-300 transition-colors">
+                            Star နှင့် TG Premium ဈေးနှုန်းများ
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Check Telegram Premium gift plans (3 Months, 6 Months, 1 Year) and Telegram Star packages (50 to 1,000 Stars) via @KIFYCASS.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-bold text-blue-400 group-hover:text-blue-300 pt-2">
+                        <span>View TG &amp; Stars</span>
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MLBB ACCOUNTS VIEW -->
+        <section id="view-accounts" class="hidden space-y-5">
+            <div id="mlbbCustomBannerWrap" class="hidden rounded-3xl overflow-hidden border border-armory-border h-44 sm:h-56 bg-[#090f1b]">
+                <img id="mlbbCustomBannerImg" src="" alt="MLBB Banner" class="w-full h-full object-cover" />
+            </div>
+
+            <div class="rounded-2xl bg-armory-surface border border-armory-border p-4 sm:p-5 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="text-[11px] font-bold tracking-widest text-blue-400 uppercase">
+                            MLBB ACCOUNT VAULT • @KIFYCASS
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white mt-0.5">
+                            Mobile Legend အကောင့်များ
+                        </h2>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                        <button type="button" onclick="navigateTo('hub')"
+                            class="px-3 py-2 rounded-xl bg-armory-card hover:bg-armory-cardHover border border-armory-border text-xs font-bold text-slate-300 hover:text-white cursor-pointer transition-colors">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Hub
+                        </button>
+                        <button type="button" onclick="navigateTo('pubg')"
+                            class="px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/40 text-amber-300 text-xs font-bold cursor-pointer transition-colors">
+                            <i class="fa-solid fa-crosshairs mr-1"></i> Pubg Mobile အကောင့်များကြည့်ရန်
+                        </button>
+                        <button type="button" onclick="openAdminPreview('mlbb')"
+                            class="px-3.5 py-2 rounded-xl neon-blue-btn text-white text-xs font-bold cursor-pointer">
+                            <i class="fa-solid fa-sliders mr-1"></i> Edit / Add MLBB
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+                    <div class="md:col-span-6 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="accountSearchInput" oninput="renderAccountsView()"
+                            placeholder="Search code (KIFY-104), rank, skin, or hero..."
+                            class="w-full bg-[#080d16] border border-armory-border focus:border-blue-500 rounded-xl pl-9 pr-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none" />
+                    </div>
+
+                    <div class="md:col-span-3">
+                        <select id="accountStatusFilter" onchange="renderAccountsView()"
+                            class="w-full bg-[#080d16] border border-armory-border focus:border-blue-500 rounded-xl px-3 py-2 text-xs sm:text-sm 
